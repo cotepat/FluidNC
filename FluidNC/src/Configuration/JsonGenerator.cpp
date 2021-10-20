@@ -50,13 +50,13 @@ namespace Configuration {
 
     void JsonGenerator::item(const char* name, bool& value) {
         enter(name);
-        const char* val = value ? "Yes" : "No";
+        const char* val = value ? "1" : "0";
         _encoder.begin_webui(_currentPath, _currentPath, "B", val);
         _encoder.begin_array("O");
         {
             _encoder.begin_object();
-            _encoder.member("No", 0);
-            _encoder.member("Yes", 1);
+            _encoder.member("False", 0);
+            _encoder.member("True", 1);
             _encoder.end_object();
         }
         _encoder.end_array();
@@ -112,21 +112,46 @@ namespace Configuration {
         leave();
     }
 
+    // void JsonGenerator::item(const char* name, int& value, EnumItem* e) {
+    //     enter(name);
+    //     const char* str = "unknown";
+    //     for (; e->name; ++e) {
+    //         if (value == e->value) {
+    //             str = e->name;
+    //             break;
+    //         }
+    //     }
+
+    //     _encoder.begin_webui(_currentPath, _currentPath, "B", str);
+    //     _encoder.begin_array("O");
+    //     for (; e->name; ++e) {
+    //         log_info("Array Name:" << e->name);
+    //         _encoder.begin_object();
+    //         _encoder.member(e->name, e->value);
+    //         _encoder.end_object();
+    //     }
+    //     _encoder.end_array();
+    //     _encoder.end_object();
+    //     leave();
+    // }
     void JsonGenerator::item(const char* name, int& value, EnumItem* e) {
         enter(name);
+        int         v;
         const char* str = "unknown";
-        for (; e->name; ++e) {
-            if (value == e->value) {
-                str = e->name;
+        for (auto e2 = e; e2->name; ++e2) {
+            if (value == e2->value) {
+                str = e2->name;
+                v   = e2->value;
                 break;
             }
         }
 
-        _encoder.begin_webui(_currentPath, _currentPath, "B", str);
+        _encoder.begin_webui(_currentPath, _currentPath, "B", v);
         _encoder.begin_array("O");
-        for (; e->name; ++e) {
+        for (auto e2 = e; e2->name; ++e2) {
+            log_info("Array Name:" << e2->name);
             _encoder.begin_object();
-            _encoder.member(e->name, e->value);
+            _encoder.member(e2->name, e2->value);
             _encoder.end_object();
         }
         _encoder.end_array();

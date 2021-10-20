@@ -56,7 +56,8 @@ namespace Configuration {
             if (newValue_ == nullptr) {
                 out_ << "$/" << setting_ << "=" << (value ? "true" : "false") << '\n';
             } else {
-                value = (!strcasecmp(newValue_, "true"));
+                value = (!strcasecmp(newValue_, "true") || !strcasecmp(newValue_, "yes") || !strcasecmp(newValue_, "1"));
+                log_info("Bool value:" << value);
             }
         }
     }
@@ -99,16 +100,19 @@ namespace Configuration {
         if (is(name)) {
             isHandled_ = true;
             if (newValue_ == nullptr) {
-                for (; e->name; ++e) {
-                    if (e->value == value) {
-                        out_ << "$/" << setting_ << "=" << e->name << '\n';
+                for (auto e2 = e; e2->name; ++e2) {
+                    log_info("Set1 val:" << value << " it name:" << e2->name << " it val: " << e2->value);
+                    if (e2->value == value) {
+                        out_ << "$/" << setting_ << "=" << e2->name << '\n';
                         return;
                     }
                 }
+
             } else {
-                for (; e->name; ++e) {
-                    if (!strcasecmp(newValue_, e->name)) {
-                        value = e->value;
+                for (auto e2 = e; e2->name; ++e2) {
+                    log_info("Set2 val:" << value << " it name:" << e2->name << " it val: " << e2->value);
+                    if (!strcasecmp(newValue_, e2->name)) {
+                        value = e2->value;
                         return;
                     }
                 }
