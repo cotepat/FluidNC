@@ -101,7 +101,6 @@ namespace Configuration {
             isHandled_ = true;
             if (newValue_ == nullptr) {
                 for (auto e2 = e; e2->name; ++e2) {
-                    log_info("Set1 val:" << value << " it name:" << e2->name << " it val: " << e2->value);
                     if (e2->value == value) {
                         out_ << "$/" << setting_ << "=" << e2->name << '\n';
                         return;
@@ -109,10 +108,21 @@ namespace Configuration {
                 }
 
             } else {
+                if (isdigit(newValue_[0])) {
+                    for (auto e2 = e; e2->name; ++e2) {
+                        if (e2->value == int(newValue_[0]) - 48) {  // convert from char
+                            
+                            value     = e2->value;
+                            newValue_ = e2->name;
+                            log_info("Set2 newValue_:" << newValue_ << " value:" << value);
+                            return;
+                        }
+                    }
+                }
                 for (auto e2 = e; e2->name; ++e2) {
-                    log_info("Set2 val:" << value << " it name:" << e2->name << " it val: " << e2->value);
-                    if (!strcasecmp(newValue_, e2->name)) {
+                    if (!strcasecmp(newValue_, e2->name)) {                        
                         value = e2->value;
+                        log_info("Set3 newValue_:" << newValue_ << " value:" << value);
                         return;
                     }
                 }

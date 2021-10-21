@@ -136,7 +136,7 @@ namespace Configuration {
     // }
     void JsonGenerator::item(const char* name, int& value, EnumItem* e) {
         enter(name);
-        int         v;
+        int         v = 0;
         const char* str = "unknown";
         for (auto e2 = e; e2->name; ++e2) {
             if (value == e2->value) {
@@ -149,7 +149,6 @@ namespace Configuration {
         _encoder.begin_webui(_currentPath, _currentPath, "B", v);
         _encoder.begin_array("O");
         for (auto e2 = e; e2->name; ++e2) {
-            log_info("Array Name:" << e2->name);
             _encoder.begin_object();
             _encoder.member(e2->name, e2->value);
             _encoder.end_object();
