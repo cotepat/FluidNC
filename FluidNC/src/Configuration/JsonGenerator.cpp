@@ -112,41 +112,19 @@ namespace Configuration {
         leave();
     }
 
-    // void JsonGenerator::item(const char* name, int& value, EnumItem* e) {
-    //     enter(name);
-    //     const char* str = "unknown";
-    //     for (; e->name; ++e) {
-    //         if (value == e->value) {
-    //             str = e->name;
-    //             break;
-    //         }
-    //     }
-
-    //     _encoder.begin_webui(_currentPath, _currentPath, "B", str);
-    //     _encoder.begin_array("O");
-    //     for (; e->name; ++e) {
-    //         log_info("Array Name:" << e->name);
-    //         _encoder.begin_object();
-    //         _encoder.member(e->name, e->value);
-    //         _encoder.end_object();
-    //     }
-    //     _encoder.end_array();
-    //     _encoder.end_object();
-    //     leave();
-    // }
     void JsonGenerator::item(const char* name, int& value, EnumItem* e) {
         enter(name);
-        int         v = 0;
-        const char* str = "unknown";
+        int         selected_val = 0;
+        const char* str          = "unknown";
         for (auto e2 = e; e2->name; ++e2) {
             if (value == e2->value) {
-                str = e2->name;
-                v   = e2->value;
+                str          = e2->name;
+                selected_val = e2->value;
                 break;
             }
         }
 
-        _encoder.begin_webui(_currentPath, _currentPath, "B", v);
+        _encoder.begin_webui(_currentPath, _currentPath, "B", selected_val);
         _encoder.begin_array("O");
         for (auto e2 = e; e2->name; ++e2) {
             _encoder.begin_object();

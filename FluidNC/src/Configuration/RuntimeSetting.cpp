@@ -108,21 +108,20 @@ namespace Configuration {
                 }
 
             } else {
-                if (isdigit(newValue_[0])) {
+                if (isdigit(newValue_[0])) {  // if the first char is a number. assume it is an index of a webui enum list
+                    int indexVal = 0;
+                    indexVal     = atoi(newValue_);
                     for (auto e2 = e; e2->name; ++e2) {
-                        if (e2->value == int(newValue_[0]) - 48) {  // convert from char
-                            
+                        if (e2->value == indexVal) {
                             value     = e2->value;
                             newValue_ = e2->name;
-                            log_info("Set2 newValue_:" << newValue_ << " value:" << value);
                             return;
                         }
                     }
                 }
                 for (auto e2 = e; e2->name; ++e2) {
-                    if (!strcasecmp(newValue_, e2->name)) {                        
+                    if (!strcasecmp(newValue_, e2->name)) {
                         value = e2->value;
-                        log_info("Set3 newValue_:" << newValue_ << " value:" << value);
                         return;
                     }
                 }
