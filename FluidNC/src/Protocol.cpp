@@ -765,13 +765,18 @@ void protocol_exec_rt_system() {
     }
 #endif
     if (rtReset) {
-        if (sys.state == State::Homing) {
-            rtAlarm = ExecAlarm::HomingFailReset;
+        if (config->_control->_reset_does_feedhold && (sys.state == State::Cycle || sys.state == State::Jog)) {
+            rtReset = false;
+            rtFeedHold = true;
+        } else {
+            if (sys.state == State::Homing) {
+                rtAlarm = ExecAlarm::HomingFailReset;
+            }
+            protocol_do_late_reset();
+            // Trigger system abort.
+            sys.abort = true;
+            return;
         }
-        protocol_do_late_reset();
-        // Trigger system abort.
-        sys.abort = true;  // Only place this is set true.
-        return;            // Nothing else to do but exit.
     }
 
     if (rtStatusReport) {
@@ -796,7 +801,16 @@ void protocol_exec_rt_system() {
     }
 
     if (rtCycleStart) {
-        protocol_do_cycle_start();
+        if(config->_control->_cycle_start_does_unlock && (sys.state == State::Alarm)) {
+            rtCycleStart = false;
+            if (config->_control->stuck()) {
+                mc_reset();
+            } 
+            report_feedback_message(Message::AlarmUnlock);
+            sys.state = State::Idle;
+        } else {
+            protocol_do_cycle_start();
+        }
     }
 
     if (rtCycleStop) {

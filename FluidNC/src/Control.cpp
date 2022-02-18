@@ -22,6 +22,8 @@ void Control::init() {
 }
 
 void Control::group(Configuration::HandlerBase& handler) {
+    handler.item("reset_does_feedhold", _reset_does_feedhold); // reset button becomes a "feedhold button" if active state is "Cycle" or "Jog"
+    handler.item("cycle_start_does_unlock", _cycle_start_does_unlock); // cycle_start button becomes an "unlock button" if active state is "Alarm"
     handler.item("safety_door_pin", _safetyDoor._pin);
     handler.item("reset_pin", _reset._pin);
     handler.item("feed_hold_pin", _feedHold._pin);

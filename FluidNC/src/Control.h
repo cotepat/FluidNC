@@ -20,6 +20,10 @@ public:
     ControlPin _macro3;
 
 public:
+    // Configurable
+    bool _reset_does_feedhold = false;
+    bool _cycle_start_does_unlock = false;
+    
     Control();
 
     // Initializes control pins.
