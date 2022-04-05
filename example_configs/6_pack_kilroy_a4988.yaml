@@ -13,7 +13,7 @@ stepping:
 
 axes:
   x:
-    steps_per_mm: 400.000
+    steps_per_mm: 400.275
     max_rate_mm_per_min: 7000.000
     acceleration_mm_per_sec2: 300.000
     max_travel_mm: 532.000
@@ -53,6 +53,7 @@ axes:
     motor0:
       limit_pos_pin: gpio.33
       hard_limits: true
+      pulloff_mm: 2.000
       stepstick:
         direction_pin: i2so.4:low
         step_pin: i2so.5
@@ -61,6 +62,7 @@ axes:
     motor1:
       limit_pos_pin: gpio.35
       hard_limits: true
+      pulloff_mm: 2.666
       stepstick:
         direction_pin: i2so.9:low
         step_pin: i2so.10
@@ -104,11 +106,13 @@ sdcard:
   cs_pin: gpio.5
 
 control:
+  reset_does_feedhold: true
+  cycle_start_does_unlock: true
   safety_door_pin: NO_PIN
-  reset_pin: gpio.15
-  feed_hold_pin: NO_PIN
+  reset_pin: gpio.2
+  feed_hold_pin: gpio.15
   cycle_start_pin: gpio.12:low
-  macro0_pin: gpio.2
+  macro0_pin: NO_PIN
   macro1_pin: gpio.25
   macro2_pin: gpio.39
   macro3_pin: gpio.36
@@ -119,10 +123,10 @@ probe:
 macros:
   startup_line0: 
   startup_line1: 
-  macro0:
-  macro1: $H
-  macro2: $HZ
-  macro3: G53 Z0; G53 X0 Y0
+  macro0: $H
+  macro1: $HX
+  macro2: $HY
+  macro3: $HZ
 
 start:
   must_home: false
