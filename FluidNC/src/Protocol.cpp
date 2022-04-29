@@ -765,7 +765,7 @@ void protocol_exec_rt_system() {
     }
 #endif
     if (rtReset) {
-        if (config->_control->_reset_does_feedhold && (sys.state == State::Cycle || sys.state == State::Jog)) {
+        if ((config->_control->_reset_does_feedhold) && (sys.state == State::Cycle || sys.state == State::Jog)) {
             rtReset = false;
             rtFeedHold = true;
         } else {
@@ -801,7 +801,7 @@ void protocol_exec_rt_system() {
     }
 
     if (rtCycleStart) {
-        if(config->_control->_cycle_start_does_unlock && (sys.state == State::Alarm)) {
+        if ((config->_control->_cycle_start_does_unlock) && (sys.state == State::Alarm)) {
             rtCycleStart = false;
             if (config->_control->stuck()) {
                 mc_reset();

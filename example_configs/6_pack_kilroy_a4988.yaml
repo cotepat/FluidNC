@@ -13,10 +13,10 @@ stepping:
 
 axes:
   x:
-    steps_per_mm: 400.275
+    steps_per_mm: 400.35
     max_rate_mm_per_min: 7000.000
-    acceleration_mm_per_sec2: 300.000
-    max_travel_mm: 532.000
+    acceleration_mm_per_sec2: 400.000
+    max_travel_mm: 531.000
     soft_limits: true
     homing:
       cycle: 2
@@ -38,7 +38,7 @@ axes:
   y:
     steps_per_mm: 400.000
     max_rate_mm_per_min: 6000.000
-    acceleration_mm_per_sec2: 300.000
+    acceleration_mm_per_sec2: 400.000
     max_travel_mm: 786.000
     soft_limits: true
     homing:
@@ -71,7 +71,7 @@ axes:
   z:
     steps_per_mm: 400.000
     max_rate_mm_per_min: 4000.000
-    acceleration_mm_per_sec2: 300.000
+    acceleration_mm_per_sec2: 400.000
     max_travel_mm: 100.000
     soft_limits: true
     homing:
@@ -106,8 +106,8 @@ sdcard:
   cs_pin: gpio.5
 
 control:
-  reset_does_feedhold: true
-  cycle_start_does_unlock: true
+  reset_does_feedhold: false
+  cycle_start_does_unlock: false
   safety_door_pin: NO_PIN
   reset_pin: gpio.2
   feed_hold_pin: gpio.15
