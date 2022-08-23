@@ -1,15 +1,30 @@
 name: Kilroy CNC - (RatRig KillerBee 1075)
 board: 6-pack
+meta: Config for TMC2160 stepper motors - 20220822
+
+arc_tolerance_mm: 0.002
+junction_deviation_mm: 0.010
+verbose_errors: false
+report_inches: false
+enable_parking_override_control: false
+use_line_numbers: false
+planner_blocks: 16
+
+start:
+  must_home: false
+  deactivate_parking: true
+  check_limits: false
 
 kinematics:
   Cartesian:
 
 stepping:
-  engine: I2S_stream
+  engine: I2S_static
   idle_ms: 255
-  dir_delay_us: 1
   pulse_us: 5
+  dir_delay_us: 0
   disable_delay_us: 0
+  segments: 12
 
 axes:
   x:
@@ -22,7 +37,7 @@ axes:
       cycle: 2
       mpos_mm: 0.000
       positive_direction: true
-      settle_ms: 350.000
+      settle_ms: 250.000
       seek_mm_per_min: 2000.000
       feed_mm_per_min: 100.000
       seek_scaler: 1.100
@@ -44,7 +59,7 @@ axes:
       cycle: 2
       mpos_mm: 0.000
       positive_direction: true
-      settle_ms: 350.000
+      settle_ms: 250.000
       seek_mm_per_min: 2000.000
       feed_mm_per_min: 100.000
       seek_scaler: 1.100
@@ -75,7 +90,7 @@ axes:
       cycle: 1
       mpos_mm: 0.000
       positive_direction: true
-      settle_ms: 350.000
+      settle_ms: 250.000
       seek_mm_per_min: 2000.000
       feed_mm_per_min: 100.000
       seek_scaler: 1.100
@@ -114,29 +129,28 @@ probe:
   pin: gpio.13:low:pu
 
 macros:
-  startup_line0: $$
+  startup_line0: 
   startup_line1: 
   macro0: $HX
   macro1: $HY
   macro2: $HZ
   macro3: $MD
 
-start:
-  must_home: false
-  check_limits: true
-
 10v:
   tool_num: 0
   speed_map: 0=0.000% 0=5.000% 3500=5.000% 3500=10.000% 25000=90.000% 25000=100.000%
-  spinup_ms: 1000
-  spindown_ms: 1000
+  spinup_ms: 250
+  spindown_ms: 250
   output_pin: gpio.26
   disable_with_s0: false
   s0_with_disable: true
   pwm_hz: 5000
-arc_tolerance_mm: 0.002
-junction_deviation_mm: 0.010
-verbose_errors: true
-report_inches: false
-enable_parking_override_control: false
-use_line_numbers: false
+
+Laser:
+  pwm_hz: 5000
+  output_pin: gpio.14
+  enable_pin: NO_PIN
+  disable_with_s0: false
+  s0_with_disable: true
+  tool_num: 1
+  speed_map: 0=0.000% 255=100.000%
