@@ -119,7 +119,7 @@ sdcard:
 control:
   safety_door_pin: NO_PIN
   reset_pin: gpio.15
-  cycle_start_pin: gpio.12:low
+  cycle_start_pin: NO_PIN
   macro0_pin: gpio.2
   macro1_pin: gpio.25
   macro2_pin: gpio.39
@@ -147,10 +147,10 @@ macros:
   pwm_hz: 5000
 
 Laser:
-  pwm_hz: 5000
+  pwm_hz: 128
   output_pin: gpio.14
   enable_pin: NO_PIN
   disable_with_s0: false
   s0_with_disable: true
   tool_num: 1
-  speed_map: 0=0.000% 255=100.000%
+  speed_map: 0=0.000% 1000=100.000%
