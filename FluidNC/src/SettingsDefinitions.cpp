@@ -9,6 +9,8 @@ StringSetting* start_message;
 
 IntSetting* status_mask;
 
+IntSetting* sd_fallback_cs;
+
 IntSetting* fake_report_inches;
 
 IntSetting* fake_homing_enabled;
@@ -102,7 +104,6 @@ void make_settings() {
     fake_y_resolution = new IntSetting("Y resolution (used by some senders, does not affect fluidNC behavior)", GRBL, WG, "101", "Fake/$101", 0, 0, 32000, NULL);
     fake_x_resolution = new IntSetting("X resolution (used by some senders, does not affect fluidNC behavior)", GRBL, WG, "100", "Fake/$100", 0, 0, 32000, NULL);
     fake_spindle_min =  new IntSetting("Spindle min (used by some senders, does not affect fluidNC behavior)", GRBL, WG, "31", "Fake/$31", 0, 0, 100000, NULL);
-    fake_spindle_max =  new IntSetting("Spindle max (used by some senders, does not affect fluidNC behavior)", GRBL, WG, "30", "Fake/$30", 30000, 0, 100000, NULL);
     fake_homing_pulloff = new IntSetting("Homing pulloff (used by some senders, does not affect fluidNC behavior)", GRBL, WG, "27", "Fake/$27", 0, 0, 10, NULL);
     fake_homing_dir_invert = new IntSetting("Homing direction invert mask (used by some senders, does not affect fluidNC behavior)", GRBL, WG, "23", "Fake/$23", 0, 0, 7, NULL);
     fake_homing_enabled = new IntSetting("Homing enabled? (used by some senders, does not affect fluidNC behavior)", GRBL, WG, "22", "Fake/$22", 1, 0, 1, NULL);

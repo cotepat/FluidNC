@@ -10,6 +10,8 @@ extern StringSetting* start_message;
 
 extern IntSetting* status_mask;
 
+extern IntSetting* sd_fallback_cs;
+
 extern IntSetting* fake_report_inches;
 
 extern IntSetting* fake_homing_enabled;
